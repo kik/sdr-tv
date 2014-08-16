@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<block>
+  <name>crt_f</name>
+  <key>ntsc_crt_f</key>
+  <category>ntsc</category>
+  <import>import ntsc</import>
+	<import>from gnuradio import wxgui</import>
+	<make>#set $parent = $notebook() and 'self.%s.GetPage(%s)'%$notebook() or 'self'
+ntsc.crt_f(
+	$(parent).GetWin(),
+	title=$title,
+	sample_rate=$samp_rate,
+)
+#if not $grid_pos()
+$(parent).Add(self.$(id).win)
+#else
+$(parent).GridAdd(self.$(id).win, $(', '.join(map(str, $grid_pos()))))
+#end if</make>
+
+<!--  <make>ntsc.crt_f()</make> -->
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+	<param>
+		<name>Title</name>
+		<key>title</key>
+		<value>Scope Plot</value>
+		<type>string</type>
+	</param>
+	<param>
+		<name>Sample Rate</name>
+		<key>samp_rate</key>
+		<value>samp_rate</value>
+		<type>real</type>
+	</param>
+	<param>
+		<name>Grid Position</name>
+		<key>grid_pos</key>
+		<value></value>
+		<type>grid_pos</type>
+	</param>
+	<param>
+		<name>Notebook</name>
+		<key>notebook</key>
+		<value></value>
+		<type>notebook</type>
+	</param>
+
+  <sink>
+    <name>h</name>
+    <type>float</type>
+  </sink>
+  <sink>
+    <name>v</name>
+    <type>float</type>
+  </sink>
+  <sink>
+    <name>y</name>
+    <type>float</type>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+
+</block>
